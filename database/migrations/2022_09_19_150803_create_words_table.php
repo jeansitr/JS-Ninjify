@@ -17,11 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('word', 30)->unique()->nullable(false);
         });
-
-        $rawWords = file_get_contents(resource_path().'/json/words.json');
-        $words = json_decode($rawWords, true)['words'];
-
-        DB::table('words')->insert($words);
     }
 
     /**

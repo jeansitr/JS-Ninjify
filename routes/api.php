@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Buzzword;
-use App\Models\Word;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,37 +23,38 @@ Route::get('/ninjify', function () {
     $buzzwords = request('x');
 
     if ($buzzwords) {
-        $buzzwords = explode(',', $buzzwords);
-
-        $buzzwords = Buzzword::with("words")->whereIn('buzzword', $buzzwords)->get();
-
         $descriptives = collect([]);
 
-        //TODO: Change this, Cleary an N+1 error
+        //Get Buzzwords
+        $buzzwords = explode(',', $buzzwords);
+        $buzzwords = Buzzword::with('words')->whereIn('buzzword', $buzzwords)->get();
+
         foreach ($buzzwords as $buzzword) {
             $descriptives->add($buzzword->words->map(fn ($word) => $word->word));
         }
 
+        //put in a single array and only keeps unique ones
         $descriptives = $descriptives->flatten()->unique();
 
-        $descriptivesCnt = count($descriptives);
-        if ($descriptivesCnt > 4) {
+        if (count($descriptives) > 4) {
             $ninjaName = '';
 
             //select up to 4 words for ninja name
             $nameCnt = rand(1, 4);
+
             for ($i = 0; $i < $nameCnt; $i++) {
-                $descriptivesCnt--;
-
-                $chosenIndx = rand(0, $descriptivesCnt);
-
-                $ninjaName .= $descriptives[$chosenIndx].' ';
-                $descriptives->pull($descriptives[$chosenIndx]);
+                $chosen = $descriptives->random(1)[0];
+                $ninjaName .= $chosen.' ';
+                $descriptives->pull($chosen);
             }
 
             $ninjaName = Str::squish($ninjaName);
+        } else {
+            return ['error' => 'Buzzwords not found.'];
         }
 
         return ['ninjaname' => $ninjaName];
+    } else {
+        return ['error' => 'Missing Buzzwords.'];
     }
 });
