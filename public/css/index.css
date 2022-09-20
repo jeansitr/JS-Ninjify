@@ -1,0 +1,98 @@
+html, body{
+    height: 100%;
+    background-color: #564a95 !important;
+}
+
+input, .errorlbl{
+    width: 100%;
+    margin-top: 10px!important;
+    border-radius: 5px;
+    border: 2px solid black;
+}
+
+img{
+    max-height: 200px;
+    max-width: 100px;
+    margin-bottom: 10px;
+}
+
+#center-box{
+    text-align: center;
+    margin: auto;
+    width: 100%;
+}
+
+#ninjaname{
+    font-weight: 900;
+}
+
+#resetbtn{
+    transition: all .2s ease-in-out;
+}
+
+#resetbtn:hover{
+    background-color: red;
+}
+
+.errorbox{
+    height: 0;
+    overflow-y: hidden;
+    transition: height 1s linear;
+}
+
+.error{
+    height: auto !important;
+}
+
+.errorlbl{
+    background-color: lightcoral;
+    border: 2px solid red;
+}
+
+.imgbox{
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    height: 0;
+}
+
+.kunai{
+    transform: rotate(-55deg);
+    margin-bottom: 40px;
+}
+
+.ninjify-box{
+    background-color: slategray;
+    color: white;
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.ninjifybtn, #resetbtn{
+    transition: all .2s ease-in-out;
+}
+
+.ninjifybtn:hover{
+    background-color: grey;
+}
+
+.hidden{
+    display: none;
+}
+
+.shuriken{
+    animation: rotation .5s infinite linear;
+    margin-bottom: 0;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
