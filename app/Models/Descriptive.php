@@ -9,7 +9,5 @@ class Descriptive extends Model
 {
     use HasFactory;
 
-    public function GetDescriptivesByBuzzwords($buzzwords)
-    {
-    }
+    public $timestamps = false;
 }

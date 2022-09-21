@@ -4,16 +4,15 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Buzzword;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
 
-class NinjifyController extends Controller
+class GenerateNinjaController extends Controller
 {
     /**
      * Get ninja name or give back error
-     *
-     * @return string[]
      */
-    public function GetNinjaNameOrFail()
+    public function __invoke(): JsonResponse
     {
         $buzzwords = request('x');
 
@@ -30,7 +29,6 @@ class NinjifyController extends Controller
 
             //put in a single array and only keeps unique ones
             $descriptives = $descriptives->flatten()->unique();
-
             $descCnt = $descriptives->count();
             if ($descCnt > 4) {
                 $ninjaName = '';
@@ -46,12 +44,12 @@ class NinjifyController extends Controller
 
                 $ninjaName = Str::squish($ninjaName);
             } else {
-                return ['error' => 'Buzzwords not found.'];
+                return response()->json(['error' => 'Buzzwords not found.']);
             }
 
-            return ['ninjaname' => $ninjaName];
+            return response()->json(['ninjaname' => $ninjaName]);
         } else {
-            return ['error' => 'Missing Buzzwords.'];
+            return response()->json(['error' => 'Missing Buzzwords.']);
         }
     }
 }
