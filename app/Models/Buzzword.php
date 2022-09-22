@@ -9,6 +9,10 @@ class Buzzword extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
+    public $timestamps = false;
+
     public function words()
     {
         return $this->belongsToMany(Word::class, 'descriptives');
